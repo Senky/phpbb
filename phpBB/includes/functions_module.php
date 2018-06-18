@@ -934,6 +934,14 @@ class p_master
 				);
 
 				$template->assign_block_vars($use_tabular_offset, array_merge($tpl_ary, array_change_key_case($item_ary, CASE_UPPER)));
+
+				if ($tpl_ary['S_SELECTED'])
+				{
+					$template->assign_block_vars('navlinks', array(
+						'BREADCRUMB_NAME'	=> $tpl_ary['L_TITLE'],
+						'U_BREADCRUMB'		=> $tpl_ary['U_TITLE'],
+					));
+				}
 			}
 
 			$tpl_ary = array(

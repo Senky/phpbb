@@ -480,6 +480,11 @@ while ($row = $db->sql_fetchrow($result))
 }
 $db->sql_freeresult($result);
 
+$template->assign_block_vars('navlinks', array(
+	'BREADCRUMB_NAME'	=> $user->lang('WHO_IS_ONLINE'),
+	'U_BREADCRUMB'		=> append_sid("{$phpbb_root_path}viewonline.$phpEx"),
+));
+
 // Refreshing the page every 60 seconds...
 meta_refresh(60, append_sid("{$phpbb_root_path}viewonline.$phpEx", "sg=$show_guests&amp;sk=$sort_key&amp;sd=$sort_dir&amp;start=$start"));
 

@@ -160,6 +160,11 @@ class faq extends controller
 			)
 		);
 
+		$this->template->assign_block_vars('navlinks', array(
+			'BREADCRUMB_NAME'	=> $this->language->lang('FAQ'),
+			'U_BREADCRUMB'		=> $this->helper->route('phpbb_help_faq_controller'),
+		));
+
 		return $this->language->lang('FAQ_EXPLAIN');
 	}
 }

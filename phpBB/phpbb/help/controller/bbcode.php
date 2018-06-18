@@ -80,6 +80,11 @@ class bbcode extends controller
 			)
 		);
 
+		$this->template->assign_block_vars('navlinks', array(
+			'BREADCRUMB_NAME'	=> $this->language->lang('BBCODE_GUIDE'),
+			'U_BREADCRUMB'		=> $this->helper->route('phpbb_help_bbcode_controller'),
+		));
+
 		return $this->language->lang('BBCODE_GUIDE');
 	}
 }

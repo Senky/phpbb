@@ -364,6 +364,11 @@ switch ($mode)
 			}
 		}
 
+		$template->assign_block_vars('navlinks', array(
+			'BREADCRUMB_NAME'	=> $user->lang('THE_TEAM'),
+			'U_BREADCRUMB'		=> append_sid("{$phpbb_root_path}memberlist.$phpEx", "mode=team"),
+		));
+
 		$template->assign_vars(array(
 			'PM_IMG'		=> $user->img('icon_contact_pm', $user->lang['SEND_PRIVATE_MESSAGE']))
 		);
@@ -460,6 +465,11 @@ switch ($mode)
 				}
 			break;
 		}
+
+		$template->assign_block_vars('navlinks', array(
+			'BREADCRUMB_NAME'	=> $user->lang('IM_USER'),
+			'U_BREADCRUMB'		=> append_sid("{$phpbb_root_path}memberlist.$phpEx", "mode=contact&amp;action=$action"),
+		));
 
 		// Send vars to the template
 		$template->assign_vars(array(
@@ -784,6 +794,15 @@ switch ($mode)
 			);
 		}
 
+		$template->assign_block_vars('navlinks', array(
+			'BREADCRUMB_NAME'	=> $user->lang('MEMBERLIST'),
+			'U_BREADCRUMB'		=> append_sid("{$phpbb_root_path}memberlist.$phpEx"),
+		));
+		$template->assign_block_vars('navlinks', array(
+			'BREADCRUMB_NAME'	=> $member['username'],
+			'U_BREADCRUMB'		=> append_sid("{$phpbb_root_path}memberlist.$phpEx", "mode=viewprofile&amp;u=$user_id"),
+		));
+
 		// Now generate page title
 		$page_title = sprintf($user->lang['VIEWING_PROFILE'], $member['username']);
 		$template_html = 'memberlist_view.html';
@@ -832,6 +851,20 @@ switch ($mode)
 			$messenger = new messenger(false);
 			$form->submit($messenger);
 		}
+
+		$u_breadcrumb = append_sid("{$phpbb_root_path}memberlist.$phpEx", "mode=$mode");
+		if ($user_id)
+		{
+			$u_breadcrumb .= '&amp;u=' . $user_id;
+		}
+		if ($topic_id)
+		{
+			$u_breadcrumb .= '&amp;t=' . $topic_id;
+		}
+		$template->assign_block_vars('navlinks', array(
+			'BREADCRUMB_NAME'	=> $form->get_page_title(),
+			'U_BREADCRUMB'		=> $u_breadcrumb,
+		));
 
 		$page_title = $form->get_page_title();
 		$template_html = $form->get_template_file();
@@ -1620,6 +1653,18 @@ switch ($mode)
 		extract($phpbb_dispatcher->trigger_event('core.memberlist_modify_template_vars', compact($vars)));
 
 		$template->assign_vars($template_vars);
+
+		$template->assign_block_vars('navlinks', array(
+			'BREADCRUMB_NAME'	=> $user->lang('MEMBERLIST'),
+			'U_BREADCRUMB'		=> append_sid("{$phpbb_root_path}memberlist.$phpEx"),
+		));
+		if ($mode == 'group')
+		{
+			$template->assign_block_vars('navlinks', array(
+				'BREADCRUMB_NAME'	=> $group_helper->get_name($group_row['group_name']),
+				'U_BREADCRUMB'		=> append_sid("{$phpbb_root_path}memberlist.$phpEx", "mode=group&amp;g=$group_id"),
+			));
+		}
 }
 
 // Output the page
