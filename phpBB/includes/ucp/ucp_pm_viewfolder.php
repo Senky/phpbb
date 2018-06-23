@@ -54,15 +54,6 @@ function view_folder($id, $mode, $folder_id, $folder)
 			$color_rows = array_merge($color_rows, array('friend', 'foe'));
 		}
 
-		foreach ($color_rows as $var)
-		{
-			$template->assign_block_vars('pm_colour_info', array(
-				'IMG'	=> $user->img("pm_{$var}", ''),
-				'CLASS'	=> "pm_{$var}_colour",
-				'LANG'	=> $user->lang[strtoupper($var) . '_MESSAGE'])
-			);
-		}
-
 		$mark_options = array('mark_important', 'delete_marked');
 
 		// Minimise edits
@@ -184,7 +175,6 @@ function view_folder($id, $mode, $folder_id, $folder)
 
 			$template->assign_vars(array(
 				'S_SHOW_RECIPIENTS'		=> ($folder_id == PRIVMSGS_OUTBOX || $folder_id == PRIVMSGS_SENTBOX) ? true : false,
-				'S_SHOW_COLOUR_LEGEND'	=> true,
 
 				'REPORTED_IMG'			=> $user->img('icon_topic_reported', 'PM_REPORTED'),
 				'S_PM_ICONS'			=> ($config['enable_pm_icons']) ? true : false)
